@@ -1,4 +1,4 @@
-# ChemJS
+# DockJS
 
 DockJS is the underlying code for the next revision of the Social Docking project.
 
