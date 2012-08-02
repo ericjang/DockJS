@@ -1,0 +1,5 @@
+GPU computing support via WebCL will have to be done in DockJS.
+
+For example, experiment.start() can be done in parallel if the simulations are independent.
+
+In the future, add a flag to support this.

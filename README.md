@@ -15,37 +15,50 @@ Step 1: Download the source library (full or minified)
 git clone git://github.com/ericjang/DockJS
 ```
 
-Step 2: Include the source script in your html, your WebWorker, or NodeJS application.
+Step 2: Include the source script in your html, your WebWorker, or NodeJS application. Make sure that GraphJS and ChemJS (dependencies) are imported beforehand.
+
+```html
+<script src="GraphJS.js"></script>
+<script src="ChemJS.js"></script>
+<script src="DockJS.js"></script>
+```
 
 Step 3: Set up simulation
 ```JavaScript
-var docking_job = DockJS.newDock({
-	'ligand':molecule,
-	'target':molecule,
-	'algorithm':{
-		type:'MCMC',
-		iterations:'10000',
-		temperature:500K
-	}
-	'solvation':{
-		boxSize:12
-		solvent:'water'
-		density:0.9
-	},
-	'flexibleLigand':false,
-	'flexibleReceptor':{
-		//flexible receptor parameters (e.g. cutoff goes here)
-	},
-	error:function({
-		//error handling goes here
-	});
+
+var docking_job = new DockJS.simulation({
+	'ligandOptions': { molecule : caffeine },
+	'targetOptions': { molecule: adenosineReceptor },
 });
+
 ```
-Step 4: Run the experiment!
+Step 4: Run the simulation!
 ```JavaScript
-docking_job.start();
+
+var result = docking_job.start(); //returns a 'result' object
+
+/**
+result;
+
+{
+	'status':'completed',//'aborted'
+	'optimal ligand pose': {
+		ligand : Molecule Obj,//ligand molecule with optimal atom positions
+		receptor : Molecule Obj//receptor molecule with optimal atom positions
+	}
+	'score':-1000,//in kJ/mol
+	'simulationTime': Time difference
+}
+*/
+
 ```
 
 ## API
+
+DockJS is designed in a modular fashion, enabling scientists to implement their own algorithms & extend DockJS with minimal effort. 
+
+### Simulations and Experiments
+
+In DockJS, a 'simulation' is the simulated interaction between ONE ligand and ONE receptor. An 'experiment' consists of multiple simulations.
 
 See the ChemJS framework on how chemicals are represented.
